@@ -27,10 +27,10 @@ class CrushesController extends Controller
      */
     public function create()
     {
-        $crush = new Crush();
-        return view('crushes.create', array('crush'=>$crush,
-                                            'action'=>route('crushes.store'),
-                                             'submit_text'=>"Create Crush"));
+      $crush = new Crush();
+      return view('crushes.create', array('crush'=>$crush,
+                                          'action'=>route('crushes.store'),
+                                          'submit_text'=>"Create Crush")); 
     }
 
     /**
@@ -69,7 +69,7 @@ class CrushesController extends Controller
        $crush = Crush::find($id);
 
        return view('crushes.create', array('crush'    =>$crush,
-                                           'action'   =>route('crushes.id.update', array('id'=>$crush->id)),
+                                           'action'   =>route('crushes.id.update',array('id'=>$crush->id)),
                                            'submit_text' =>"Update Crush")
    );
     } 
@@ -96,13 +96,24 @@ class CrushesController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $crush = Crush::find($id);
+       $crush->delete();
+
+       return redirect()->back();
     }
 
    
    
 
     private function setAndSaveCrushData($crush, $request){
+
+        $request->validate([
+                'first_name'=> 'required',
+                'last_name'=> 'required',
+                'fb_profile_link'=> 'required|url',
+                'contact_number'=>  'required|digits:11'
+            ]);
+
         $crush->first_name = $request->first_name;
         $crush->last_name = $request->last_name;
         $crush->fb_profile_link = $request->fb_profile_link;
@@ -110,6 +121,8 @@ class CrushesController extends Controller
         $crush->created_at = Carbon::now();
         $crush->updated_at = Carbon::now();
         $crush->save();
+
+        
     }
 
 }

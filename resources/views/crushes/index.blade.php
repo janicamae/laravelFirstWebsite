@@ -23,7 +23,11 @@
 			<td></td>
 			<td></td>
 			<td></td>
-			<td><a href="{{ route('crushes.create') }}">Add New Crush</a></td>
+			<td><a href="{{ route('crushes.create') }}">Add New Crush</a>
+
+		</tr>
+		<tr>
+			 <a href="{{ route('crushes.id.destroy',array('id'=>$crush->id)) }}">Delete</a>
 		</tr>
 	</tbody>
 </table>
